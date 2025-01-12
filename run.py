@@ -34,11 +34,16 @@ def get_ingredients_for_lyophilized():
         raise exc
 
 def run_backend():
-    fetch_fda_drugs()
-    mark_lyophilized_drugs_in_db()
-    get_ingredients_for_lyophilized()
+    try:
+        fetch_fda_drugs()
+        mark_lyophilized_drugs_in_db()
+        get_ingredients_for_lyophilized()
+        log.do_info("Data pipeline completed")
+    except Exception as exc:
+        log.do_error(f"Pipeline error: {str(exc)}")
+        raise exc
 
 if __name__ == "__main__":
-    # run_backend()
+    run_backend()
     print("test")
     
